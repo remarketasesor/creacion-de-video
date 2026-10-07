@@ -20,7 +20,7 @@
     {"type": "keyword", "start": 10.8, "end": 12.9, "text": "Editar videos con Claude", "emoji": "✂️"},
     {"type": "emoji", "start": 13.9, "end": 15.0, "emoji": "🔥", "x": 18, "y": 46},
     {"type": "vs", "start": 15.9, "end": 17.7, "left": "✅ Real", "right": "❌ Fake"},
-    {"type": "keyword", "start": 18.1, "end": 20.2, "text": "Editado 100% con Claude", "emoji": "🤖"},
+    {"type": "keyword", "start": 18.1, "end": 20.2, "text": "Editado con Claude", "emoji": "🤖"},
     {"type": "list", "start": 20.5, "end": 24.2, "title": "Este video tiene:", "items": ["Subtítulos animados", "Motion graphics", "Efectos de sonido", "Zooms dinámicos"]},
     {"type": "emoji", "start": 22.0, "end": 23.6, "emoji": "✨", "x": 85, "y": 46},
     {"type": "cta", "start": 24.3, "end": 25.7, "text": "¿Aprobado o reprobado?", "sub": "Coméntalo 👇"}
