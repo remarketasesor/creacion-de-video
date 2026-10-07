@@ -23,6 +23,7 @@ export type Graphic = Timed &
     | {type: 'emoji'; emoji: string; x?: number; y?: number}
     | {type: 'broll'; src: string; label?: string}
     | {type: 'cta'; text: string; sub?: string}
+    | {type: 'vs'; left: string; right: string}
   );
 
 export type Plan = {

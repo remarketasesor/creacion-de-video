@@ -76,7 +76,7 @@ const List: React.FC<P<'list'>> = ({title, items, brand, fontFamily, durationInF
   return (
     <AbsoluteFill style={{justifyContent: 'flex-start', alignItems: 'center', paddingTop: 200, opacity: exit}}>
       <div style={{...pill(brand), width: 900, transform: `translateY(${(1 - enter) * -300}px)`}}>
-        <div style={{fontFamily, fontWeight: 900, fontSize: 64, color: brand.accent, textTransform: 'uppercase', marginBottom: 18}}>{title}</div>
+        <div style={{fontFamily, fontWeight: 900, fontSize: 70, color: brand.accent, textTransform: 'uppercase', marginBottom: 18}}>{title}</div>
         {items.map((item, i) => {
           const s = spring({frame: frame - 8 - i * step, fps, config: {damping: 12}});
           return (
@@ -85,9 +85,9 @@ const List: React.FC<P<'list'>> = ({title, items, brand, fontFamily, durationInF
               style={{
                 fontFamily,
                 fontWeight: 800,
-                fontSize: 50,
+                fontSize: 60,
                 color: '#fff',
-                margin: '10px 0',
+                margin: '12px 0',
                 transform: `translateX(${(1 - s) * -120}px)`,
                 opacity: s,
                 display: 'flex',
@@ -150,7 +150,41 @@ const Cta: React.FC<P<'cta'>> = ({text, sub, brand, fontFamily, durationInFrames
     <AbsoluteFill style={{justifyContent: 'flex-start', alignItems: 'center', paddingTop: 300, opacity: exit}}>
       <div style={{...pill(brand), background: brand.accent, borderColor: '#fff', textAlign: 'center', transform: `scale(${enter * pulse})`, maxWidth: 940}}>
         <div style={{fontFamily, fontWeight: 900, fontSize: 84, color: brand.primary, textTransform: 'uppercase', lineHeight: 1.05}}>{text}</div>
-        {sub ? <div style={{fontFamily, fontWeight: 800, fontSize: 48, color: brand.primary, marginTop: 10}}>{sub}</div> : null}
+        {sub ? <div style={{fontFamily, fontWeight: 900, fontSize: 60, color: brand.primary, marginTop: 10}}>{sub}</div> : null}
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+// Enfrentamiento: dos etiquetas entran desde los lados y un "VS" golpea en medio.
+const Vs: React.FC<P<'vs'>> = ({left, right, brand, fontFamily, durationInFrames}) => {
+  const {frame, fps, exit} = useInOut(durationInFrames);
+  const l = spring({frame, fps, config: {damping: 13, stiffness: 200}});
+  const r = spring({frame: frame - 4, fps, config: {damping: 13, stiffness: 200}});
+  const v = spring({frame: frame - 9, fps, config: {damping: 8, stiffness: 260}});
+  const shake = frame >= 9 && frame < 17 ? Math.sin(frame * 3) * (17 - frame) * 1.5 : 0;
+  const side: React.CSSProperties = {...pill(brand), fontFamily, fontWeight: 900, fontSize: 68, color: '#fff', textTransform: 'uppercase', padding: '24px 34px', whiteSpace: 'nowrap', textAlign: 'center'};
+  return (
+    <AbsoluteFill style={{justifyContent: 'flex-start', alignItems: 'center', paddingTop: 200, opacity: exit}}>
+      <div style={{display: 'flex', alignItems: 'center', gap: 0, transform: `translateX(${shake}px)`}}>
+        <div style={{...side, transform: `translateX(${(1 - l) * -700}px) rotate(-4deg)`}}>{left}</div>
+        <div
+          style={{
+            fontFamily,
+            fontWeight: 900,
+            fontSize: 110,
+            color: brand.accent,
+            WebkitTextStroke: `12px ${brand.stroke}`,
+            paintOrder: 'stroke fill',
+            margin: '0 -24px',
+            zIndex: 2,
+            transform: `scale(${interpolate(v, [0, 1], [3, 1])})`,
+            opacity: Math.min(v * 2, 1),
+          }}
+        >
+          VS
+        </div>
+        <div style={{...side, background: brand.accent, color: brand.primary, transform: `translateX(${(1 - r) * 700}px) rotate(4deg)`}}>{right}</div>
       </div>
     </AbsoluteFill>
   );
@@ -170,5 +204,7 @@ export const GraphicView: React.FC<{g: Graphic; brand: Brand; fontFamily: string
       return <BRoll {...g} {...rest} />;
     case 'cta':
       return <Cta {...g} {...rest} />;
+    case 'vs':
+      return <Vs {...g} {...rest} />;
   }
 };

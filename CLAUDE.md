@@ -7,8 +7,8 @@ Pipeline: video crudo → limpieza → transcripción → **plan de edición (lo
 ```bash
 npm install && pip install faster-whisper auto-editor   # una vez
 scripts/make-sfx.sh                                      # una vez: genera whoosh/pop
-scripts/prepare.sh entrada/video.mp4                     # 1. quita silencios, 1080x1920, 30fps
-python3 scripts/transcribe.py                            # 2. public/captions.json + public/input/transcript.txt
+scripts/prepare.sh entrada/a.mp4 entrada/b.mp4           # 1. une clips en orden, quita silencios, 1080x1920, 30fps
+python3 scripts/transcribe.py large-v3 es "Claude, nombres propios"  # 2. captions.json + transcript.txt
 #                                                          3. Claude escribe public/plan.json
 node scripts/render.mjs nombre                           # 4. out/nombre.mp4
 ```
@@ -17,7 +17,7 @@ Revisar un render: extraer cuadros con `ffmpeg -ss <seg> -i out/x.mp4 -frames:v 
 
 ## Cómo escribir `public/plan.json`
 
-Formato en `src/types.ts`. Ejemplo en `ejemplos/plan-ejemplo.json`. Tiempos en segundos de
+Formato en `src/types.ts`. Ejemplos en `ejemplos/` (`plan-piloto-claude.json` es un video real). Tiempos en segundos de
 `public/input/clean.mp4`; `durationSec` sale de `public/input/meta.json`. Marcas en `public/brands/<id>.json`.
 
 Reglas de ritmo viral:
@@ -27,8 +27,16 @@ Reglas de ritmo viral:
 - **keyword:** 1–4 palabras, la idea central de la frase, en el momento exacto en que se dice.
 - **stat:** cada vez que se menciona un número, porcentaje o precio.
 - **list:** cuando se enumeran pasos o beneficios; `end` cuando se termina de decir el último.
+- **vs:** enfrentamientos o dilemas ("IA vs editores", "real vs fake"), 1–2 palabras por lado.
 - **emoji:** refuerzo emocional (máx. 1 cada 5 s), alternar `x` izquierda/derecha.
 - **highlightWords:** 5–15 palabras de valor (dinero, resultado, dolor, beneficio).
 - **cta** en los últimos 2–3 s (seguir, comentar una palabra, guardar).
 - Los gráficos no se enciman entre sí, salvo `emoji` sobre otro gráfico.
 - Respetar las restricciones de cada cliente (p. ej. salud: nada de promesas de cura ni antes/después).
+
+## Notas del entorno en la nube
+
+- Google Drive: `gdown` sirve para listar la carpeta, pero descarga los archivos con
+  `curl -L "https://drive.usercontent.google.com/download?id=<ID>&export=download&confirm=t"`
+  (`*.googleusercontent.com` no está permitido).
+- Si el orden de los clips importa, el gancho suele ser la toma más corta y polémica: ponla primero.

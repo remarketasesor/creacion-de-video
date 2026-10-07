@@ -22,7 +22,7 @@ const useCameraScale = (plan: Plan) => {
     const zin = spring({frame: frame - start, fps, config: {damping: 14, stiffness: 260}});
     const zout = spring({frame: frame - end, fps, config: {damping: 20}});
     scale *= 1 + ((z.scale ?? 1.25) - 1) * (zin - zout);
-    origin = `${z.x ?? 50}% ${z.y ?? 38}%`;
+    origin = `${z.x ?? 50}% ${z.y ?? 32}%`;
   }
   return {scale, origin};
 };
@@ -79,7 +79,6 @@ export const ViralVideo: React.FC<ViralProps> = ({plan, words, brand}) => {
   const fontFamily = fontFor(brand.font);
   const {scale, origin} = useCameraScale(plan);
   const graphics = plan.graphics ?? [];
-  const ctaRanges = graphics.filter((g) => g.type === 'cta');
 
   return (
     <AbsoluteFill style={{background: '#000'}}>
@@ -106,7 +105,7 @@ export const ViralVideo: React.FC<ViralProps> = ({plan, words, brand}) => {
         </Sequence>
       ) : null}
 
-      <Captions words={words} brand={brand} fontFamily={fontFamily} highlight={plan.highlightWords ?? []} hiddenRanges={ctaRanges} />
+      <Captions words={words} brand={brand} fontFamily={fontFamily} highlight={plan.highlightWords ?? []} hiddenRanges={[]} />
 
       {/* destellos de transición al entrar cada zoom */}
       {(plan.zooms ?? []).map((z, i) => (
@@ -123,7 +122,7 @@ export const ViralVideo: React.FC<ViralProps> = ({plan, words, brand}) => {
         ? [
             ...graphics.map((g, i) => (
               <Sequence key={`s${i}`} from={sec(g.start, fps)} durationInFrames={20}>
-                <Audio src={staticFile(g.type === 'emoji' || g.type === 'stat' ? 'sfx/pop.wav' : 'sfx/whoosh.wav')} volume={0.5} />
+                <Audio src={staticFile(g.type === 'emoji' || g.type === 'stat' || g.type === 'vs' ? 'sfx/pop.wav' : 'sfx/whoosh.wav')} volume={0.5} />
               </Sequence>
             )),
             ...(plan.zooms ?? []).map((z, i) => (
