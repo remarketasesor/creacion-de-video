@@ -1,0 +1,8 @@
+node_modules/
+out/
+public/input/*
+!public/input/.gitkeep
+public/captions.json
+entrada/
+*.log
+public/plan.json
