@@ -40,3 +40,13 @@ Reglas de ritmo viral:
   `curl -L "https://drive.usercontent.google.com/download?id=<ID>&export=download&confirm=t"`
   (`*.googleusercontent.com` no está permitido).
 - Si el orden de los clips importa, el gancho suele ser la toma más corta y polémica: ponla primero.
+
+## Cuenta personal de Luis (@luisinanaya)
+
+- Estrategia (nicho, pilares, metas, reglas): `estrategia/plan-monetizacion-resumen.md`.
+- Guiones y calendario oct–dic 2026: `estrategia/guiones-oct-dic-2026.md`. Cada guion tiene un ID (G1-01, R-01…);
+  las tomas llegan a Drive como `crudos/AAAA-MM-DD/<ID>.mp4` y sus "Notas de edición" se traducen a `public/plan.json`.
+- Reglas al escribir o editar para su cuenta: nada de datos identificables de clientes, nada de presentarse como
+  experto COFEPRIS, cifras no verificadas van entre [corchetes], los videos que venden REMARKET IA llevan "Tu marca",
+  y nunca "editado 100% por IA / ningún humano".
+- Para @remarketmx no se resube el mismo archivo: se repostea o se hace una versión distinta.

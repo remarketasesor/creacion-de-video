@@ -7,5 +7,5 @@ entrada/
 *.log
 public/plan.json
 
-# Estrategia con datos confidenciales de clientes: no se publica sin autorización
-estrategia/
+# Plan completo con datos confidenciales de clientes: solo local
+estrategia/plan-monetizacion-luisinanaya.md
