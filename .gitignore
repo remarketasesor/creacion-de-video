@@ -6,3 +6,6 @@ public/captions.json
 entrada/
 *.log
 public/plan.json
+
+# Estrategia con datos confidenciales de clientes: no se publica sin autorización
+estrategia/
