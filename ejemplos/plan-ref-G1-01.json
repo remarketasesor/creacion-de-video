@@ -1,0 +1,311 @@
+{
+ "video": "input/g101.mp4",
+ "durationSec": 45.16,
+ "blocks": [
+  {
+   "from": 0,
+   "to": 4,
+   "big": 3
+  },
+  {
+   "from": 5,
+   "to": 10,
+   "big": 8
+  },
+  {
+   "from": 11,
+   "to": 15,
+   "big": 15
+  },
+  {
+   "from": 16,
+   "to": 21,
+   "big": 19
+  },
+  {
+   "from": 22,
+   "to": 27,
+   "big": 27
+  },
+  {
+   "from": 28,
+   "to": 33,
+   "big": 29
+  },
+  {
+   "from": 34,
+   "to": 39,
+   "big": 38
+  },
+  {
+   "from": 40,
+   "to": 44,
+   "big": 44
+  },
+  {
+   "from": 45,
+   "to": 48,
+   "big": 46
+  },
+  {
+   "from": 49,
+   "to": 52,
+   "big": 52
+  },
+  {
+   "from": 53,
+   "to": 56,
+   "big": 56
+  },
+  {
+   "from": 57,
+   "to": 60,
+   "big": 60
+  },
+  {
+   "from": 61,
+   "to": 63,
+   "big": 63
+  },
+  {
+   "from": 64,
+   "to": 66,
+   "big": 66
+  },
+  {
+   "from": 67,
+   "to": 70,
+   "big": 69
+  },
+  {
+   "from": 71,
+   "to": 76,
+   "big": 76
+  },
+  {
+   "from": 77,
+   "to": 80,
+   "big": 80
+  },
+  {
+   "from": 81,
+   "to": 85,
+   "big": 85
+  },
+  {
+   "from": 86,
+   "to": 89,
+   "big": 89
+  },
+  {
+   "from": 90,
+   "to": 92,
+   "big": 92
+  },
+  {
+   "from": 93,
+   "to": 97,
+   "big": 97
+  },
+  {
+   "from": 98,
+   "to": 99,
+   "big": 99
+  },
+  {
+   "from": 100,
+   "to": 103,
+   "big": 103
+  },
+  {
+   "from": 104,
+   "to": 108,
+   "big": 106
+  },
+  {
+   "from": 109,
+   "to": 113,
+   "big": 113
+  },
+  {
+   "from": 114,
+   "to": 119,
+   "big": 119
+  },
+  {
+   "from": 120,
+   "to": 122,
+   "big": 122
+  },
+  {
+   "from": 123,
+   "to": 125,
+   "big": 125
+  },
+  {
+   "from": 126,
+   "to": 128,
+   "big": 128
+  }
+ ],
+ "scenes": [
+  {
+   "kind": "profile",
+   "start": 0,
+   "end": 2.6300000000000003,
+   "chip": "Mi cuenta · TikTok",
+   "handle": "@luisinanaya",
+   "value": 567,
+   "label": "seguidores"
+  },
+  {
+   "kind": "progress",
+   "start": 3.9199999999999995,
+   "end": 6.02,
+   "chip": "Pagados con Promote",
+   "value": 518,
+   "total": 567,
+   "label": "seguidores pagados"
+  },
+  {
+   "kind": "button",
+   "start": 8.94,
+   "end": 13.02,
+   "chip": "TikTok Promote",
+   "button": "Promocionar",
+   "pressAt": 10.04,
+   "caption": "mi video → más personas"
+  },
+  {
+   "kind": "bars",
+   "start": 18.009999999999998,
+   "end": 23.84,
+   "chip": "Fuentes de tráfico · 60 días",
+   "highlightAt": 18.64,
+   "bars": [
+    {
+     "label": "Para ti",
+     "value": 90.6
+    },
+    {
+     "label": "Búsqueda",
+     "value": 6.7
+    },
+    {
+     "label": "Perfil",
+     "value": 2.2
+    },
+    {
+     "label": "Siguiendo",
+     "value": 0.5,
+     "highlight": true
+    }
+   ]
+  },
+  {
+   "kind": "checklist",
+   "start": 29.66,
+   "end": 36.08,
+   "chip": "Antes de pagar Promote",
+   "title": "promote · checklist",
+   "items": [
+    {
+     "text": "Solo vistas",
+     "ok": false,
+     "at": 32.98
+    },
+    {
+     "text": "Mensajes",
+     "ok": true,
+     "at": 35.14
+    },
+    {
+     "text": "Negocio",
+     "ok": true,
+     "at": 35.56
+    }
+   ]
+  },
+  {
+   "kind": "question",
+   "start": 39.76,
+   "end": 43.2,
+   "chip": "Cuéntame",
+   "question": "¿Has pagado Promote solo por vistas?",
+   "options": [
+    "Sí",
+    "No"
+   ]
+  }
+ ],
+ "cardIntroAt": 2.6300000000000003,
+ "sfx": [
+  {
+   "at": 0,
+   "src": "sfx/swish.wav",
+   "volume": 0.22
+  },
+  {
+   "at": 3.9199999999999995,
+   "src": "sfx/swish.wav",
+   "volume": 0.22
+  },
+  {
+   "at": 8.94,
+   "src": "sfx/swish.wav",
+   "volume": 0.22
+  },
+  {
+   "at": 18.009999999999998,
+   "src": "sfx/swish.wav",
+   "volume": 0.22
+  },
+  {
+   "at": 29.66,
+   "src": "sfx/swish.wav",
+   "volume": 0.22
+  },
+  {
+   "at": 39.76,
+   "src": "sfx/swish.wav",
+   "volume": 0.22
+  },
+  {
+   "at": 10.04,
+   "src": "sfx/click.wav",
+   "volume": 0.45
+  },
+  {
+   "at": 18.64,
+   "src": "sfx/softpop.wav",
+   "volume": 0.35
+  },
+  {
+   "at": 32.98,
+   "src": "sfx/click.wav",
+   "volume": 0.4
+  },
+  {
+   "at": 35.14,
+   "src": "sfx/click.wav",
+   "volume": 0.4
+  },
+  {
+   "at": 35.56,
+   "src": "sfx/click.wav",
+   "volume": 0.4
+  },
+  {
+   "at": 1.24,
+   "src": "sfx/softpop.wav",
+   "volume": 0.3
+  },
+  {
+   "at": 4.02,
+   "src": "sfx/softpop.wav",
+   "volume": 0.3
+  }
+ ],
+ "videoFilter": "brightness(1.12) contrast(1.05) saturate(0.95)",
+ "mirror": true
+}

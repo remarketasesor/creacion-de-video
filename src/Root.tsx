@@ -1,6 +1,8 @@
 import React from 'react';
 import {Composition, staticFile} from 'remotion';
 import {ViralVideo, type ViralProps} from './ViralVideo';
+import {EstiloRef} from './estilo/EstiloRef';
+import type {RefProps} from './estilo/types';
 import type {Brand, Plan, Word} from './types';
 
 const FPS = 30;
@@ -15,6 +17,22 @@ const load = async (): Promise<ViralProps> => {
 };
 
 export const Root: React.FC = () => (
+  <>
+  <Composition
+    id="EstiloRef"
+    component={EstiloRef}
+    fps={FPS}
+    width={1080}
+    height={1920}
+    durationInFrames={FPS * 30}
+    defaultProps={{} as RefProps}
+    calculateMetadata={async ({props}) => {
+      const p: RefProps = props.plan
+        ? props
+        : {plan: await fetch(staticFile('plan-ref.json')).then((r) => r.json()), words: await fetch(staticFile('captions.json')).then((r) => r.json())};
+      return {props: p, durationInFrames: Math.ceil(p.plan.durationSec * FPS)};
+    }}
+  />
   <Composition
     id="ViralVideo"
     component={ViralVideo}
@@ -28,4 +46,5 @@ export const Root: React.FC = () => (
       return {props: p, durationInFrames: Math.ceil(p.plan.durationSec * FPS)};
     }}
   />
+  </>
 );
