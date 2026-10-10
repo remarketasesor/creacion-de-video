@@ -1,6 +1,7 @@
 // Paso 4: renderiza a out/<nombre>.mp4
 // Uso: node scripts/render.mjs [nombre] [composición=ViralVideo] [plan=plan.json]
 //   estilo de referencia: node scripts/render.mjs g1-01 EstiloRef plan-ref.json
+//   guía COFEPRIS:        node scripts/render.mjs cofepris Cofepris
 import {bundle} from '@remotion/bundler';
 import {renderMedia, selectComposition} from '@remotion/renderer';
 import fs from 'node:fs';
@@ -10,9 +11,14 @@ const root = path.resolve(import.meta.dirname, '..');
 const [name = 'video', id = 'ViralVideo', planFile = id === 'EstiloRef' ? 'plan-ref.json' : 'plan.json'] = process.argv.slice(2);
 const read = (p) => JSON.parse(fs.readFileSync(path.join(root, 'public', p), 'utf8'));
 
-const plan = read(planFile);
-const words = read('captions.json');
-const inputProps = id === 'EstiloRef' ? {plan, words} : {plan, words, brand: read(`brands/${plan.brand}.json`)};
+// Animaciones sin plan (p. ej. Cofepris) no leen archivos.
+const STANDALONE = ['Cofepris'];
+let inputProps = {};
+if (!STANDALONE.includes(id)) {
+  const plan = read(planFile);
+  const words = read('captions.json');
+  inputProps = id === 'EstiloRef' ? {plan, words} : {plan, words, brand: read(`brands/${plan.brand}.json`)};
+}
 
 // En la nube usamos el Chromium preinstalado en vez de descargar uno.
 const pw = '/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell';

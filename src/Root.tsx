@@ -3,6 +3,7 @@ import {Composition, staticFile} from 'remotion';
 import {ViralVideo, type ViralProps} from './ViralVideo';
 import {EstiloRef} from './estilo/EstiloRef';
 import type {RefProps} from './estilo/types';
+import {Cofepris, COFEPRIS_DURATION} from './anim/Cofepris';
 import type {Brand, Plan, Word} from './types';
 
 const FPS = 30;
@@ -18,6 +19,7 @@ const load = async (): Promise<ViralProps> => {
 
 export const Root: React.FC = () => (
   <>
+  <Composition id="Cofepris" component={Cofepris} fps={FPS} width={1080} height={1920} durationInFrames={COFEPRIS_DURATION} />
   <Composition
     id="EstiloRef"
     component={EstiloRef}
