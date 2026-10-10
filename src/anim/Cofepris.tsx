@@ -11,11 +11,12 @@ for (const w of ['600', '800', '900']) loadFont({family: 'Urbanist', url: static
 for (const w of ['500', '700']) loadFont({family: 'JetBrains Mono', url: staticFile(`fonts/JetBrainsMono-${w}.woff2`), weight: w});
 
 const FPS = 30;
+const K = 1.5; // multiplica los retrasos de aparición para dar tiempo de leer
 const s = (sec: number) => Math.round(sec * FPS);
 
 const useIn = (delay: number, dur = 10) => {
   const f = useCurrentFrame();
-  const p = interpolate(f, [delay, delay + dur], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)});
+  const p = interpolate(f, [delay * K, delay * K + dur], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)});
   return {opacity: p, filter: `blur(${(1 - p) * 8}px)`, transform: `translateY(${(1 - p) * 34}px)`} as React.CSSProperties;
 };
 
@@ -60,8 +61,9 @@ const Col: React.FC<{children: React.ReactNode; top?: number; gap?: number; zoom
   </AbsoluteFill>
 );
 
-const Check: React.FC<{at: number; ok?: boolean}> = ({at, ok = true}) => {
+const Check: React.FC<{at: number; ok?: boolean}> = ({at: at0, ok = true}) => {
   const f = useCurrentFrame();
+  const at = at0 * K;
   const done = f >= at;
   const k = done ? interpolate(f, [at, at + 4, at + 8], [0.7, 1.12, 1], {extrapolateRight: 'clamp'}) : 1;
   const color = ok ? B.blue : B.red;
@@ -248,19 +250,24 @@ const Cierre: React.FC = () => (
 );
 
 // ---------- Línea de tiempo ----------
-type Item = {sec: number; el: (dur: number) => React.ReactNode; sfx?: {at: number; src: string; v?: number}[]};
-const STEP_SEC = 5.2;
-const clicksAt = (start: number, every: number, n: number) => Array.from({length: n}, (_, i) => ({at: start + i * every, src: 'sfx/click.wav', v: 0.35}));
+type Sfx = {at: number; src: string; v?: number};
+type Item = {sec: number; el: (dur: number) => React.ReactNode; sfx?: Sfx[]};
+const at = (d: number, src: string, v = 0.3): Sfx => ({at: d, src, v}); // d en "unidades de retraso" (se multiplica por K)
+const many = (start: number, every: number, n: number, src: string, v = 0.3) => Array.from({length: n}, (_, i) => at(start + i * every, src, v));
 
 export const TIMELINE: Item[] = [
-  {sec: 4.8, el: () => <Intro />},
-  {sec: 7, el: () => <QueEs />},
-  {sec: 9.5, el: () => <Requisitos />, sfx: clicksAt(34, 12, 5)},
-  ...STEPS.map((_, i) => ({sec: STEP_SEC, el: (dur: number) => <Step i={i} dur={dur} />, sfx: [{at: 3, src: 'sfx/softpop.wav', v: 0.3}]})),
-  {sec: 7.5, el: () => <Cuando />},
-  {sec: 8.5, el: () => <Contenido />, sfx: [...clicksAt(18, 7, 4), ...clicksAt(60, 7, 4)]},
-  {sec: 6.5, el: () => <Acompanamos />},
-  {sec: 6, el: () => <Cierre />},
+  {sec: 7, el: () => <Intro />, sfx: [at(0, 'sfx/rise.wav', 0.35), at(11, 'sfx/chime.wav', 0.22), at(26, 'sfx/softpop.wav', 0.25)]},
+  {sec: 13, el: () => <QueEs />, sfx: [at(5, 'sfx/softpop.wav', 0.25), ...many(28, 8, 3, 'sfx/bubble.wav', 0.22), at(54, 'sfx/tick.wav', 0.3)]},
+  {sec: 17, el: () => <Requisitos />, sfx: [at(5, 'sfx/softpop.wav', 0.25), ...many(34, 12, 5, 'sfx/bubble.wav', 0.25), at(34 + 4 * 12 + 4, 'sfx/chime.wav', 0.18)]},
+  ...STEPS.map((st, i) => ({
+    sec: 7.5 + st.d.split(' ').length * 0.12,
+    el: (dur: number) => <Step i={i} dur={dur} />,
+    sfx: [at(3, 'sfx/bubble.wav', 0.28), at(6, 'sfx/softpop.wav', 0.2), at(28, 'sfx/tick.wav', 0.3), at(34, 'sfx/tick.wav', 0.3), ...(i === STEPS.length - 1 ? [at(36, 'sfx/chime.wav', 0.2)] : [])],
+  })),
+  {sec: 13, el: () => <Cuando />, sfx: [at(5, 'sfx/softpop.wav', 0.25), ...many(18, 12, 3, 'sfx/bubble.wav', 0.22)]},
+  {sec: 15, el: () => <Contenido />, sfx: [...many(18, 7, 4, 'sfx/bubble.wav', 0.25), ...many(60, 7, 4, 'sfx/tick.wav', 0.35)]},
+  {sec: 10, el: () => <Acompanamos />, sfx: [at(5, 'sfx/softpop.wav', 0.25), ...many(18, 10, 3, 'sfx/bubble.wav', 0.22)]},
+  {sec: 10, el: () => <Cierre />, sfx: [at(0, 'sfx/rise.wav', 0.3), at(6, 'sfx/chime.wav', 0.25)]},
 ];
 export const COFEPRIS_DURATION = TIMELINE.reduce((a, x) => a + s(x.sec), 0);
 
@@ -273,9 +280,14 @@ const Fade: React.FC<{dur: number; children: React.ReactNode}> = ({dur, children
 export const Cofepris: React.FC = () => {
   const {fps} = useVideoConfig();
   let from = 0;
+  const total = COFEPRIS_DURATION;
   return (
     <AbsoluteFill>
       <Background />
+      <Audio
+        src={staticFile('music/fondo-suave.m4a')}
+        volume={(f) => 0.16 * interpolate(f, [0, 30, total - 60, total], [0, 1, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})}
+      />
       {TIMELINE.map((it, i) => {
         const dur = Math.round(it.sec * fps);
         const start = from;
@@ -283,9 +295,9 @@ export const Cofepris: React.FC = () => {
         return (
           <Sequence key={i} from={start} durationInFrames={dur}>
             <Fade dur={dur}>{it.el(dur)}</Fade>
-            <Audio src={staticFile('sfx/swish.wav')} volume={0.2} />
+            <Audio src={staticFile('sfx/swish.wav')} volume={0.18} />
             {(it.sfx ?? []).map((x, k) => (
-              <Sequence key={k} from={x.at} durationInFrames={20}>
+              <Sequence key={k} from={Math.round(x.at * K)} durationInFrames={40}>
                 <Audio src={staticFile(x.src)} volume={x.v ?? 0.3} />
               </Sequence>
             ))}
